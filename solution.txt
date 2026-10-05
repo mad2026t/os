@@ -1,0 +1,44 @@
+Solution 1 (Safest)
+Check what process is using the lock:
+sudo lsof /var/lib/dpkg/lock-frontend
+or
+sudo lsof /var/lib/dpkg/lock
+If it's apt, apt-get, or unattended-upgrades, wait a minute or two and try again.
+Solution 2 (If no update is actually running)
+Remove the lock files:
+sudo rm -f /var/lib/dpkg/lock-frontend
+sudo rm -f /var/lib/dpkg/lock
+sudo rm -f /var/cache/apt/archives/lock
+Then repair the package database:
+sudo dpkg --configure -a
+Finally run:
+sudo apt update
+Solution 3 (If an apt process is stuck)
+Find the process:
+ps aux | grep apt
+If you find a stuck process, terminate it:
+sudo kill -9 <PID>
+Then run:
+sudo dpkg --configure -a
+sudo apt update
+Replace <PID> with the process ID shown by ps.
+
+
+
+
+
+
+
+
+key error :
+
+sudo rm /etc/apt/sources.list.d/google-chrome.list
+sudo apt update
+
+
+sudo adduser prasanna
+sudo usermod -aG sudo prasanna
+su - prasanna
+sudo whoami
+
+
