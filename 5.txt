@@ -1,0 +1,43 @@
+5(a) KVM Installation – Minimal Commands
+cirros 0.5.1 x86 64 disk img
+
+wget https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img
+
+
+egrep -c '(vmx|svm)' /proc/cpuinfo
+uname -a
+ls /lib/modules/$(uname -r)/kernel/arch/x86/kvm/kvm*
+sudo apt install qemu-kvm libvirt-bin bridge-utils virt-manager qemu-system
+sudo nano /etc/libvirt/libvirtd.conf
+unix_sock_group = "libvirt"
+unix_sock_ro_perms = "0777"
+unix_sock_rw_perms = "0777"
+unix_sock_dir = "/var/run/libvirt"
+auth_unix_ro = "none"
+auth_unix_rw = "none"
+
+No authentication for write.
+Verify Configuration
+grep "^[^#]" /etc/libvirt/libvirtd.conf
+
+
+sudo systemctl restart libvirtd
+virsh list
+virsh
+virsh #
+nodeinfo
+sudo virt-manager
+
+---------------------------
+5(b) KVM Image resize, diff formats – Minimal Commands  
+Instal apline virt 3.24.1 x86 64 ISO
+
+qemu-img create -f qcow2 ubuntu_vm.qcow2 10G
+
+sudo qemu-img resize ubuntu_vm.qcow2 +10G
+
+qemu-img convert -O vdi ubuntu_vm.qcow2 ubuntu_vm.vdi
+
+qemu-img convert -O vpc ubuntu_vm.qcow2 ubuntu_vm.vhd
+
+qemu-img convert -O raw ubuntu_vm.qcow2 ubuntu_vm.img

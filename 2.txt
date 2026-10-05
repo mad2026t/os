@@ -1,0 +1,18 @@
+public class square {
+    public static void main(String args[]) {
+        long st = System.nanoTime();
+        long sumOfSquares = 0;
+        int limit = 100000000;
+        for (int i = 1; i <= limit; i++) {
+            sumOfSquares += (long) i * i;
+        }
+        long et = System.nanoTime();
+        double ds = (et - st) / 1000000000.0;
+        System.out.println("Sum of squares is " + sumOfSquares);
+        System.out.println("Execution Time " + ds + " seconds");
+    }
+}
+
+
+sudo apt update
+sudo apt install default-jdk

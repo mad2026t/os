@@ -1,0 +1,46 @@
+Part 1 – Creating a Virtual Machine from an Ubuntu ISO (Virt-Manager)
+Open Virt-Manager
+Launch the Virtual Machine Manager:
+virt-manager
+
+Create a New Virtual Machine
+Click New
+Select Local install media (ISO image or CDROM)
+Click Forward
+Download the Ubuntu ISO
+Download the Ubuntu installation ISO:
+wget https://releases.ubuntu.com/16.04/ubuntu-16.04.6-server-i386.iso
+
+Select the Installation Media
+Click Browse
+Select the downloaded Ubuntu 16.04 ISO
+Verify the operating system is detected as Ubuntu 16.04
+Click Forward
+Allocate Memory and CPU
+Configure the virtual machine resources:
+Memory (RAM): 2048 MB
+CPU: 1
+Click Forward.
+Create a Virtual Hard Disk
+Create a 10 GB QCOW2 virtual disk:
+qemu-img create -f qcow2 ubuntu_vm.qcow2 10G
+
+Or create a 10 GB virtual disk using Virt-Manager.
+Click Forward.
+Name the Virtual Machine
+Enter a name for the virtual machine.
+Example:
+Prasanna_Ubuntu16.04
+
+Review the configuration and click Finish.
+Install Ubuntu
+Complete the Ubuntu installation:
+Select the language
+Choose the keyboard layout
+Configure the network (if prompted)
+Set the hostname
+Create a username and password
+Partition the disk (Guided – Use Entire Disk)
+Select OpenSSH Server
+Install the GRUB Boot Loader
+Finish the installation and restart the virtual machine

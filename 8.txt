@@ -1,0 +1,18 @@
+9 – Installation of OpenStack and VM creation - Minimal commands
+
+sudo snap install microstack --beta
+snap list microstack
+sudo microstack init --auto --control
+microstack.openstack --version
+sudo snap get microstack config.credentials.keystone-password
+ip a
+
+Check OpenStack resources
+microstack.openstack image list
+microstack.openstack flavor list
+microstack.openstack network list
+
+Create VM
+microstack.openstack network list
+microstack.openstack server create --flavor m1.tiny --image cirros --nic net-id=<NETWORK_ID> vm1
+microstack.openstack server list

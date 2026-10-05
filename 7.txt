@@ -1,0 +1,15 @@
+7(b) PowerShell – Minimal Commands  
+
+Get-VMSwitch
+
+New-VM -Name "VM1" -MemoryStartupBytes 1GB -Generation 2 -NewVHDPath "C:\Hyper-V\VM1.vhdx" -NewVHDSizeBytes 20GB
+
+Connect-VMNetworkAdapter -VMName "VM1" -SwitchName "Default Switch"
+
+Add-VMDvdDrive -VMName "VM1" -Path "C:\Path\Ubuntu.iso"
+
+Start-VM -Name "VM1"
+
+Get-VM -Name "VM1"
+
+Stop-VM -Name "VM1"
