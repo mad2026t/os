@@ -1,6 +1,6 @@
 git clone https://github.com/mad2026t/os.git
 
-wget https://tinyurl.com/virlab123
+wget https://tinyurl.com/kvm-vm
 
 
 sudo apt install python3-pip -y
