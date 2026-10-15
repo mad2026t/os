@@ -1,0 +1,48 @@
+Linux Bridge
+
+sudo apt update
+sudo apt install bridge-utils -y
+sudo brctl addbr br-cloud
+sudo brctl addif br-cloud enp0s3
+sudo ip addr flush dev enp0s3
+sudo ip link set enp0s3 up
+sudo ip link set br-cloud up
+sudo ip addr add 10.0.2.15/24 dev br-cloud
+sudo ip route add default via 10.0.2.2 dev br-cloud
+ip a
+ip route
+brctl show
+ping 8.8.8.8
+
+----------------------
+
+
+OpenVSwitch 
+
+sudo -s
+ip netns add VRF1
+ip netns add VRF2
+ip netns list
+ip link add veth1 type veth peer name veth2
+ip link add veth3 type veth peer name veth4
+ip link set veth1 netns VRF1
+ip link set veth3 netns VRF2
+ip netns exec VRF1 ip addr add 10.10.10.1/24 dev veth1
+ip netns exec VRF2 ip addr add 10.10.10.2/24 dev veth3
+ip netns exec VRF1 ip link set veth1 up
+ip netns exec VRF2 ip link set veth3 up
+ip link set veth2 up
+ip link set veth4 up
+
+Install OVS
+apt install openvswitch-switch openvswitch-common -y
+systemctl start openvswitch-switch
+
+Create switch + connect ports
+ovs-vsctl add-br vSwitch1
+ovs-vsctl add-port vSwitch1 veth2
+ovs-vsctl add-port vSwitch1 veth4
+
+Test
+ip netns exec VRF1 ping 10.10.10.2
+ovs-appctl fdb/show vSwitch1

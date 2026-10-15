@@ -1,0 +1,67 @@
+* Open the terminal and install MicroStack using the following command:
+* `sudo snap install microstack --beta`
+* Wait until the installation completes successfully.
+
+
+* Check whether MicroStack has been installed successfully by executing:
+* `snap list microstack`
+* Verify that the MicroStack package appears in the list.
+
+
+* Initialize the OpenStack environment by running:
+* `sudo microstack init --auto control`
+* Wait for all OpenStack services to be configured automatically.
+
+
+* Verify the installed OpenStack version using: `microstack.openstack --version`
+* Retrieve the administrator password for the Horizon Dashboard:
+* `sudo snap get microstack config.credentials.keystone-password`
+* Note down the displayed password for login.
+
+
+* Display the IP address of the Ubuntu system:
+* `ip a`
+* Note the IP address assigned to the network interface.
+
+
+* Open a web browser.
+* Enter the following URL: `https://<System_IP_Address>`
+* Log in using:
+* Username: `admin`
+* Password: `<Password 5 Step in obtained>`
+
+
+
+
+* After logging in, verify that the following services are available:
+* Compute
+* Instances
+* Images
+* Networks
+* Volumes
+* Security Groups
+
+
+* Display the available VM images:
+* `microstack.openstack image list`
+* Note the image name (e.g., cirros).
+
+
+* Display the available VM flavors:
+* `microstack.openstack flavor list`
+* Note the required flavor (e.g., m1.tiny).
+
+
+* Display the available virtual networks:
+* `microstack.openstack network list`
+* Note the required Network ID.
+
+
+* Create a new virtual machine using:
+* `microstack.openstack server create --flavor m1.tiny --image cirros --nic net-id=<network_id> VMName`
+* Wait until the instance creation process completes.
+
+
+* Display the list of virtual machines:
+* `microstack.openstack server list`
+* Verify that the VM status is ACTIVE.

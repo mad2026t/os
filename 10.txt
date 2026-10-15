@@ -1,0 +1,27 @@
+Storage Virtualization
+
+sudo fdisk -l
+
+sudo apt update
+sudo apt install lvm2 -y
+
+sudo pvcreate /dev/sdb
+
+sudo vgcreate storage-vg /dev/sdb
+
+sudo vgdisplay
+
+sudo lvcreate -L 3G -n storage-lv storage-vg
+
+sudo lvdisplay
+
+sudo mkfs.ext4 /dev/storage-vg/storage-lv
+
+sudo mkdir /storage
+
+sudo mount /dev/storage-vg/storage-lv /storage
+
+df -h
+
+sudo touch /storage/test.txt
+ls -l /storage

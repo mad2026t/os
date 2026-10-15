@@ -1,0 +1,11 @@
+* Launch XenCenter on Windows, which serves as the graphical management software to control XenServer hosts.
+* Connect to XenServer by clicking **Server → Add**, entering the server IP (`10.10.32.140`), username (`root`), and password (`Admin1`), and clicking **Add** to view the connected pool (e.g., `TCE-IT Pool`) and its hosts (`xenserver-lckqxksy` and `xenserver-qwaexdfg`).
+* Expand the pool, right-click `xenserver-lckqxksy`, and select **New VM**.
+* Select an operating system template (e.g., Ubuntu, Windows 7, or CentOS) and click **Next**.
+* Enter a VM name (e.g., `23IT107_Prasanna`) and click **Next**.
+* Configure VM settings including installation media (e.g., `xs-tools.iso` or Ubuntu ISO), home server (`xenserver-lckqxksy`), CPU, RAM, storage, and network, then click **Next**.
+* Tick **Start the new VM automatically**, click **Create Now**, and wait for the VM to be created.
+* Verify that the VM (`23IT107_Prasanna`) appears with a status of **Running** on `xenserver-lckqxksy`.
+* Right-click the running VM and select **Move VM** or **Live Migration** to start the migration process.
+* Choose the destination host (`xenserver-qwaexdfg`) and click **Move** to transfer memory pages and CPU state without incurring user downtime.
+* Verify that the VM disappears from `xenserver-lckqxksy`, appears under `xenserver-qwaexdfg` with a **Running** status, and requires no reboot.

@@ -1,0 +1,34 @@
+Here is the procedure converted into bullet points:
+
+* **Part 1 – Create a VHD in Windows**
+* Press **Win + R**, type `diskmgmt.msc`, and press **Enter**.
+* In **Disk Management**, select **Action → Create VHD**.
+* Browse and select the location to save the VHD file (e.g., `D:\newimage.vhd`).
+* Enter the required virtual disk size (e.g., **200 MB**).
+* Select the virtual disk format (**VHD** or **VHDX**).
+* Choose the disk type (**Fixed Size** or **Dynamically Expanding**) and click **OK**.
+* After creation, right-click the new disk and select **Initialize Disk**.
+* Right-click the unallocated space and select **New Simple Volume**.
+* Assign a drive letter (e.g., **E:**).
+* Format the partition using **NTFS** and complete the wizard.
+
+
+* **Part 2 – Restore the VHD on Another Host**
+* Copy the **.vhd/.vhdx** file to another computer using a USB drive, network, or cloud storage.
+* Open **Disk Management** by typing `diskmgmt.msc`.
+* Select **Action → Attach VHD**.
+* Browse and select the copied **.vhd/.vhdx** file, then click **OK**.
+* If required, assign a drive letter through **Change Drive Letter and Paths**.
+
+
+* **Part 3 – Extend Storage Using LVM (Linux)**
+* Shut down the virtual machine and add a new virtual hard disk (e.g., **7 GB**) through the VirtualBox Storage settings.
+* Start the VM and switch to the root user using `sudo -s`.
+* Display all available disks using `fdisk -l`.
+* Display existing components using `pvdisplay`, `vgdisplay`, and `lvdisplay`.
+* Create a Physical Volume on the new disk with `pvcreate /dev/sdb`.
+* Extend the existing Volume Group using `vgextend ubuntu-vg /dev/sdb`.
+* Extend the Logical Volume by 3 GB with `lvresize --size +3G /dev/ubuntu-vg/root`.
+* Check the current filesystem size using `df -h`.
+* Resize the filesystem using `resize2fs /dev/mapper/ubuntu--vg-root`.
+* Verify the updated storage size using `df -h`.

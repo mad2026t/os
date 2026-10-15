@@ -1,0 +1,56 @@
+* Update the package list to refresh package information:
+* `sudo apt update`
+
+
+* Upgrade packages to update installed software:
+* `sudo apt upgrade`
+
+
+* Download CirrOS to obtain a ready-made virtual machine disk:
+* `wget [https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img](https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img)`
+
+
+* Install KVM packages including KVM, QEMU, Libvirt, bridge utilities, and Virt Manager:
+* `sudo apt install qemu-kvm libvirt-bin bridge-utils virt-manager qemu-system`
+
+
+* Enable libvirt to start immediately and configure it to start automatically after reboot:
+* `sudo systemctl enable --now libvirtd`
+
+
+* Check the status of libvirt to ensure it is running:
+* `sudo systemctl status libvirtd`
+
+
+* Restart the libvirt service if needed:
+* `sudo systemctl restart libvirtd`
+
+
+* Add the current user to the `libvirt` and `kvm` groups so you can create VMs without using root:
+* `sudo usermod -aG libvirt,kvm $USER`
+
+
+* Apply the new group to refresh the current terminal session immediately without logging out:
+* `newgrp libvirt`
+
+
+* Open the GUI by launching the Virtual Machine Manager:
+* `sudo virt-manager`
+
+
+* Launch the GUI using `virt-manager`.
+* Right-click **QEMU/KVM** and select **New**.
+* Download a ready-made VM image using `wget [https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img](https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img)`.
+* Choose **Import Existing Disk Image**.
+* Browse and select the `cirros.img` file.
+* Configure VM resources and details:
+* RAM: `1024 MB`
+* CPU: `1`
+* OS: `Generic Linux`
+* VM Name: `prasanna`
+
+
+* Click **Finish**.
+* Boot the virtual machine successfully and log in using:
+* Username: `cirros`
+* Password: `cubswin:)`

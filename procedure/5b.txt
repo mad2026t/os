@@ -1,0 +1,41 @@
+* **Part 1 – Create a Virtual Machine from an ISO**
+* Launch Virtual Machine Manager using `virt-manager` and click **New**.
+* Select **Local install media (ISO image or CDROM)** and click **Forward**.
+* Download the Ubuntu Server ISO using `wget [https://releases.ubuntu.com/16.04/ubuntu-16.04.6-server-i386.iso](https://releases.ubuntu.com/16.04/ubuntu-16.04.6-server-i386.iso)`.
+* Click **Browse**, select the downloaded Ubuntu ISO, choose the correct Operating System Type/Version, and click **Forward**.
+* Configure VM resources:
+* RAM: `2048 MB`
+* CPU: `1`
+* Click **Forward**.
+
+
+* Create the virtual disk using `qemu-img create -f qcow2 ubuntu_vm.qcow2 10G` (or let Virt-Manager create it automatically).
+* Attach the QCOW2 disk if created manually, review the storage and network settings, enter the VM name as `Prasanna_Ubuntu`, and click **Finish**.
+* Complete the Ubuntu installation by selecting:
+* Language
+* Keyboard Layout
+* Hostname
+* Username
+* Password
+* Guided Partitioning
+* No HTTP Proxy (leave blank)
+* No Automatic Updates
+* Select Standard System Utilities
+* Select OpenSSH Server
+* Install GRUB Boot Loader
+
+
+* After installation finishes, remove the ISO if prompted, reboot the virtual machine, and log in using the username and password you created.
+
+* **Part 2 – Resize the Virtual Disk**
+* Shut down the virtual machine using `virsh shutdown ubuntu_vm`.
+* Increase the disk size using `sudo qemu-img resize ubuntu_vm.qcow2 +10G`.
+* Display the disk information using `qemu-img info ubuntu_vm.qcow2`.
+* Expand the partition using `sudo growpart /dev/sda 1`.
+* Resize the filesystem using `sudo resize2fs /dev/sda1`.
+
+
+* **Part 3 – Convert the Virtual Disk Format**
+* Convert the virtual disk to VirtualBox format using `qemu-img convert -O vdi ubuntu_vm.qcow2 ubuntu_vm.vdi -p`.
+* Convert the virtual disk to Hyper-V format using `qemu-img convert -O vpc ubuntu_vm.qcow2 ubuntu_vm.vhd -p`.
+* Convert the virtual disk to RAW format using `qemu-img convert -O raw ubuntu_vm.qcow2 ubuntu_vm.img -p`.
