@@ -1,0 +1,12 @@
+* Start the Ubuntu VM and create a sample file to verify migration using `nano prasanna.java` or `touch prasanna.java`, then save it.
+* Shut down the virtual machine by running `sudo shutdown now` inside Ubuntu or closing it via VirtualBox and selecting **Power Off** until the status becomes **Powered Off**.
+* Open Oracle VirtualBox and select **File → Export Appliance**.
+* Choose the VM you want to migrate (e.g., `Ubuntu`) and click **Next**.
+* Select the export format as OVA, choose the destination path (e.g., `D:\VM_Backup\Ubuntu.ova`), and click **Export** to package the disk, settings, and hardware configuration.
+* Go to the selected folder and verify that `Ubuntu.ova` has been created successfully.
+* Transfer the OVA file to another computer using a USB drive, external HDD, network sharing, or Google Drive.
+* Open VirtualBox on the second computer and select **File → Import Appliance**.
+* Browse for `Ubuntu.ova`, click **Next**, review the VM details, and click **Import** to finish the process.
+* Locate the imported VM in VirtualBox.
+* Power on the VM and allow Ubuntu to boot normally.
+* Open the terminal and verify the data by running `ls` or checking the file with `cat prasanna.java` to confirm a successful migration.

@@ -1,0 +1,32 @@
+* Create a folder on the Windows host (e.g., `D:\VMShared`) and copy a sample file (e.g., `23IT107.txt`) into it.
+* Shut down both the Ubuntu and Kali virtual machines.
+* Open VirtualBox, select the Ubuntu VM, and go to **Settings → Shared Folders**.
+* Click the Add Shared Folder (+) icon.
+* Set **Folder Path** to `D:\VMShared` and **Folder Name** to `VMShared`.
+* Enable **Auto Mount** and click **OK**, then repeat the same steps for the Kali VM.
+
+
+* Start the Ubuntu virtual machine.
+* From the VirtualBox menu, select **Devices → Insert Guest Additions CD Image** and install Guest Additions if not already installed.
+* List the mounted folders and verify the shared folder contents in Ubuntu:
+* `ls /media`
+* `ls /media/sf_VMShared`
+* Verify that the shared file is visible.
+
+
+* Start the Kali virtual machine, list the mounted folders, and verify the contents:
+* `ls /media`
+* `ls /media/sf_VMShared`
+* Verify that the same file is visible.
+
+
+* If required, fix shared folder permissions in the VM:
+* Add the current user to the group using `sudo usermod -aG vboxsf $USER`.
+* Restart the virtual machine using `sudo reboot`.
+* Verify access with `ls /media/sf_VMShared`.
+
+
+* Copy a file to the shared folder and verify it:
+* `cp VM1.txt /media/sf_VMShared/`
+* `ls /media/sf_VMShared`
+* Display the contents using `cat /media/sf_VMShared/VM1.txt`.

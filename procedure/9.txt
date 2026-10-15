@@ -1,0 +1,59 @@
+* **Part A – Linux Bridge**
+* Open the terminal and update the package list: `sudo apt update`
+* Install the bridge utilities package: `sudo apt install bridge-utils -y`
+* Create a bridge named br-cloud: `sudo brctl addbr br-cloud`
+* Connect the physical network interface to the bridge: `sudo brctl addif br-cloud enp0s3`
+* Remove the existing IP address from the network interface: `sudo ip addr flush dev enp0s3`
+* Bring the physical interface up: `sudo ip link set enp0s3 up`
+* Activate the bridge interface: `sudo ip link set br-cloud up`
+* Assign an IP address to the bridge: `sudo ip addr add 10.0.2.15/24 dev br-cloud`
+* Add the default gateway: `sudo ip route add default via 10.0.2.2 dev br-cloud`
+* Display the network interfaces, routing table, and bridge configuration:
+* `ip a`
+* `ip route`
+* `brctl show`
+
+
+* Verify internet connectivity: `ping 8.8.8.8`
+
+
+* **Part B – Open vSwitch (OVS)**
+* Switch to the root user: `sudo -s`
+* Create the network namespaces:
+* `ip netns add VRF1`
+* `ip netns add VRF2`
+
+
+* List all available namespaces: `ip netns list`
+* Create the virtual Ethernet pairs:
+* `ip link add veth1 type veth peer name veth2`
+* `ip link add veth3 type veth peer name veth4`
+
+
+* Move the interfaces to the namespaces:
+* `ip link set veth1 netns VRF1`
+* `ip link set veth3 netns VRF2`
+
+
+* Assign IP addresses to the namespaces:
+* `ip netns exec VRF1 ip addr add 10.10.10.1/24 dev veth1`
+* `ip netns exec VRF2 ip addr add 10.10.10.2/24 dev veth3`
+
+
+* Enable the interfaces:
+* `ip netns exec VRF1 ip link set veth1 up`
+* `ip netns exec VRF2 ip link set veth3 up`
+* `ip link set veth2 up`
+* `ip link set veth4 up`
+
+
+* Install the Open vSwitch packages: `apt install openvswitch-switch openvswitch-common -y`
+* Start the OVS service: `systemctl start openvswitch-switch`
+* Create a virtual switch named vSwitch1: `ovs-vsctl add-br vSwitch1`
+* Connect the interfaces to the switch:
+* `ovs-vsctl add-port vSwitch1 veth2`
+* `ovs-vsctl add-port vSwitch1 veth4`
+
+
+* Test communication between the namespaces: `ip netns exec VRF1 ping 10.10.10.2`
+* Display the forwarding database of the Open vSwitch: `ovs-appctl fdb/show vSwitch1`

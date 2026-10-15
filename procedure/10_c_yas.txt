@@ -1,0 +1,24 @@
+* Power OFF the VM properly through VirtualBox without suspending it.
+* Open VirtualBox, navigate to **Settings → Storage**, and select the SATA controller.
+* Click **Add Hard Disk (+)**, choose **Create**, select **VDI** and **Dynamically Allocated**, set the disk size (e.g., **7 GB**), and click **Create** so the new disk appears alongside the existing virtual disk.
+* Boot the Ubuntu VM normally.
+* Display all connected disks using `sudo fdisk -l` to identify the existing OS disk (`/dev/sda`) and the newly added virtual disk (`/dev/sdb`).
+* Update the package list and install the Logical Volume Manager tools:
+* `sudo apt update`
+* `sudo apt install lvm2 -y`
+
+
+* Convert the new disk into an LVM Physical Volume (PV) using `sudo pvcreate /dev/sdb`.
+* Create a Volume Group (VG) named `storage-vg` using the new physical volume: `sudo vgcreate storage-vg /dev/sdb`.
+* Display volume group details using `sudo vgdisplay` to verify successful creation.
+* Create a 3 GB Logical Volume named `storage-lv` inside the volume group:
+* `sudo lvcreate -L 3G -n storage-lv storage-vg`
+
+
+* Display logical volume details using `sudo lvdisplay`.
+* Format the logical volume with the ext4 filesystem using `sudo mkfs.ext4 /dev/storage-vg/storage-lv`.
+* Create a mount point folder using `sudo mkdir /storage`.
+* Mount the logical volume to the `/storage` folder using `sudo mount /dev/storage-vg/storage-lv /storage`.
+* Verify the mount and available space using `df -h`.
+* Create a test file inside the mounted storage to verify it is writable: `sudo touch /storage/test.txt`.
+* List the contents of `/storage` using `ls -l /storage` to confirm that the logical volume is mounted correctly and functional.

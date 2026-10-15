@@ -1,0 +1,25 @@
+* Open Windows PowerShell as Administrator and display the available virtual switches:
+* `Get-VMSwitch`
+* Verify that a virtual switch (e.g., Default Switch) is available.
+
+
+* Create a new virtual machine by executing:
+* `New-VM -Name "VM1" -MemoryStartupBytes 1GB -Generation 2 -NewVHDPath "C:\Hyper-V\VM1.vhdx" -NewVHDSizeBytes 20GB`
+* Wait until the virtual machine and virtual hard disk are created successfully.
+
+
+* Connect the virtual machine to the available virtual switch: `Connect-VMNetworkAdapter -VMName "VM1" -SwitchName "Default Switch"`
+* Attach the Ubuntu installation ISO to the virtual DVD drive: `Add-VMDvdDrive -VMName "VM1" -Path "C:\Path\Ubuntu.iso"`
+* Start the virtual machine:
+* `Start-VM -Name "VM1"`
+* Wait for the virtual machine to boot.
+
+
+* Check the status of the virtual machine:
+* `Get-VM -Name "VM1"`
+* Verify that the VM state is Running.
+
+
+* Stop the virtual machine:
+* `Stop-VM -Name "VM1"`
+* Verify that the virtual machine has stopped successfully.
